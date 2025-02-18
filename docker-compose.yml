@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"   # Update to 5000
+    environment:
+      - DATABASE_URL=/app/db.sqlite
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command: ["npm", "start"]
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend

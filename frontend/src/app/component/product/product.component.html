@@ -1,0 +1,59 @@
+<div class="container">
+  <h2>Product Management</h2>
+
+  <button (click)="showPopup = true">Add Product</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Created Date</th>
+        <th>Updated Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ getCategoryName(product.category_id) }}</td>
+        <td>{{ product.price | currency }}</td>
+        <td>{{ product.stock }}</td>
+        <td>{{ product.createdAt }}</td>
+        <td>{{ product.updatedAt }}</td>
+        <td>
+          <button (click)="editProduct(product)">Edit</button>
+          <button (click)="deleteProduct(product.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="popup" *ngIf="showPopup">
+    <div class="popup-content">
+      <h3>{{ editingProduct ? 'Edit Product' : 'Add Product' }}</h3>
+      <form [formGroup]="productForm" (ngSubmit)="submitForm()">
+        <label>Name:</label>
+        <input formControlName="name" />
+
+        <label>Category:</label>
+        <select formControlName="category_id">
+          <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+        </select>
+
+        <label>Price:</label>
+        <input type="number" formControlName="price" />
+
+        <label>Stock:</label>
+        <input type="number" formControlName="stock" />
+
+        <button type="submit">{{ editingProduct ? 'Update' : 'Add' }}</button>
+        <button type="button" (click)="closePopup()">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="container">
+  <h2>Category Management</h2>
+
+  <button (click)="showPopup = true">Add Category</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>name</th>
+        <th>created_dt</th>
+        <th>updated_dt</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of categories">
+        <td>{{ category.id }}</td>
+        <td>{{ category.name }}</td>
+        <td>{{ category.createdAt }}</td>
+        <td>{{ category.updatedAt }}</td>
+        <td>
+          <button (click)="editCategory(category)">Edit</button>
+          <button (click)="deleteCategory(category.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="popup" *ngIf="showPopup">
+    <div class="popup-content">
+      <h3>{{ editingCategory ? 'Edit Category' : 'Add Category' }}</h3>
+      <form [formGroup]="categoryForm" (ngSubmit)="submitForm()">
+        <label>Name:</label>
+        <input formControlName="name" />
+        <button type="submit">{{ editingCategory ? 'Update' : 'Add' }}</button>
+        <button type="button" (click)="closePopup()">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>
